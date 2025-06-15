@@ -1,4 +1,4 @@
-package com.test.selenium.login;
+package com.test.selenium.bitgo;
 
 import java.util.Map;
 
