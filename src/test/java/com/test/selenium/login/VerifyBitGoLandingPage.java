@@ -20,36 +20,42 @@ public class VerifyBitGoLandingPage extends BaseTest{
 	
 	@Test()
     public void verifyTransactionalText() {
-		String actualTransactionalText = "25 of 2875 Transactions";
-		WebDriver driver = getDriver();
-		BitGoPage bitGoPage = new BitGoPage(driver);
-		
-		String expectedTransactionalText = bitGoPage.getTransactionsText(driver);
+		 try {
+	            String actualTransactionalText = "25 of 2875 Transactions";
+	            WebDriver driver = getDriver();
+	            BitGoPage bitGoPage = new BitGoPage(driver);
 
-//        LoginPage loginPage = new LoginPage(getDriver());
-//        loginPage.login("student", "Password123");
-        Assert.assertEquals(actualTransactionalText, expectedTransactionalText);
+	            String expectedTransactionalText = bitGoPage.getTransactionsText(driver);
+
+	            Assert.assertEquals(actualTransactionalText, expectedTransactionalText);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            Assert.fail("Exception occurred in verifyTransactionalText: " + e.getMessage());
+	        }
     }
 	
 	
 	@Test()
     public void printTransactionsHaveOneInputAndTwoOutput() {
-		WebDriver driver = getDriver();
-		BitGoPage bitGoPage = new BitGoPage(driver);
-		
+		try {
+            WebDriver driver = getDriver();
+            BitGoPage bitGoPage = new BitGoPage(driver);
 
+            Map<String, WebElement> matched = bitGoPage.getMatchingTransactionDetails();
 
-		 Map<String, WebElement> matched = bitGoPage.getMatchingTransactionDetails();
+            System.out.println("Matching Transactions (1 input, 2 outputs): " + matched.size());
 
-	        System.out.println("Matching Transactions (1 input, 2 outputs): " + matched.size());
-
-	        int count = 1;
-	        for (Map.Entry<String, WebElement> entry : matched.entrySet()) {
-	            System.out.println("Transaction #" + count++);
-	            System.out.println("Transaction Text (from <a>): " + entry.getKey());
-	            // Optional: print full transaction details
-	            // System.out.println(entry.getValue().getText());
-	        }
+            int count = 1;
+            for (Map.Entry<String, WebElement> entry : matched.entrySet()) {
+                System.out.println("Transaction #" + count++);
+                System.out.println("Transaction Text (from <a>): " + entry.getKey());
+                // Optionally print full transaction text:
+                // System.out.println(entry.getValue().getText());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Exception occurred in printTransactionsHaveOneInputAndTwoOutput: " + e.getMessage());
+        }
     }
 
 }
